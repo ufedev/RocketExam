@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+img {
+  max-width: 100%;
+}
+
+.main-content {
+  max-height: calc(100vh - 4rem);
+  height: 100%;
+  overflow: hidden;
+}
+
+.max-h {
+  height: 100vh;
+  max-height: calc(100vh - 10.5rem);
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* IE y Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
