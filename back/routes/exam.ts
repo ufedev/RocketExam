@@ -182,7 +182,7 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
     ${req.body.resolvCode}
     const inputs = ${JSON.stringify(inputs)}
     inputs.forEach(input=>{
-      console.log(solucion(...input))
+      console.log(JSON.stringify(solucion(...input)))
     })
     `
 
@@ -220,7 +220,7 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
       return
     }
     console.log(resultToken)
-    const output = JSON.parse(resultToken.stdout.trim())
+    const output = resultToken.stdout.trim().split('\n')
     const realOutput = output.map((o: any) => JSON.parse(o))
     const out = problem.get('output')
     const expectedOutput = Array.isArray(out) ? out : []
