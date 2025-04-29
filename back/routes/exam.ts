@@ -332,15 +332,10 @@ examRouter.post('/exam/result', auth0, async (req: CustomReq, res) => {
 
     const realCode = `
     ${code}
-
     const inputs = ${JSON.stringify(inputs)}
-
-    inputs.forEach((input)=>{
-    
-    console.log(solucion(...input))
-    
+    inputs.forEach(input=>{
+      console.log(JSON.stringify(solucion(...input)))
     })
-
     `
 
     try {
