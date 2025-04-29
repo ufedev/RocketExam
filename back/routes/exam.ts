@@ -202,7 +202,7 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
 
     const response = await request.json()
     const token = response.token
-
+    console.log(token)
     let resultToken = null
     do {
       await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -219,14 +219,7 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
       })
       return
     }
-
-    // res.json(resultToken)
-    // return
-    // console.log(resultToken)
-    // res.json({
-    //   error: false,
-    //   result: resultToken
-    // })
+    console.log(resultToken)
     const output = resultToken.stdout.trim().split('\n')
     const realOutput = output.map((o: any) => JSON.parse(o))
     const out = problem.get('output')
