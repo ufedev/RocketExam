@@ -239,6 +239,13 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
       result: finalOutput
     })
   } catch (er) {
+    if (er instanceof Error) {
+      res.json({
+        error: true,
+        result: er.message
+      })
+      return
+    }
     res.json({
       error: true,
       result: 'ERROR EN EL SERVIDOR'
