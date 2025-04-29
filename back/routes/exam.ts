@@ -222,8 +222,12 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
 
     // res.json(resultToken)
     // return
-
-    const output = resultToken.stdout.toString().trim().split('\n')
+    console.log(resultToken)
+    res.json({
+      error: false,
+      result: resultToken
+    })
+    const output = resultToken.stdout.split('\n')
     const realOutput = output.map((o: any) => JSON.parse(o))
     const out = problem.get('output')
     const expectedOutput = Array.isArray(out) ? out : []
