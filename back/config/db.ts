@@ -1,13 +1,13 @@
 import { Sequelize } from 'sequelize'
 
-export const sequelize = new Sequelize({
-  dialect: 'mysql',
-  host: '0.0.0.0',
-  port: 3306,
-  username: 'root',
-  password: 'aezakmi',
-  database: 'rocketexam'
-  // storage: `./${process.env.DB_NAME}`
+const PORT = process.env.DB_PORT
+const HOST = process.env.DB_HOST
+const USER = process.env.DB_USER
+const PASS = process.env.DB_PASS
+const NAME = process.env.DB_NAME
+export const sequelize = new Sequelize(`mysql://${HOST}:${PORT}/${NAME}`, {
+  username: USER,
+  password: PASS
 })
 
 console.log(process.env.DB_NAME)

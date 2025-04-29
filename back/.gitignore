@@ -2,3 +2,4 @@ node_modules
 databasedb.db
 package-lock.json
 dist
+.env
