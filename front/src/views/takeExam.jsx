@@ -306,7 +306,7 @@ const TakeExam = () => {
             showCancelButton: true,
             cancelButtonText: "Cancelar"
         }).then(async (confirm) => {
-            if (confirm) {
+            if (confirm.isConfirmed) {
                 callbackExam()
             }
 

@@ -179,11 +179,38 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
     // console.log(problemas[1])
 
     const realCode = `
-    ${req.body.resolvCode}
+    const realOutput = console.log
+    console.log= ()=>{
+      realOutput(JSON.stringify("No vas a obtener nada!"))
+      return
+    }
     const inputs = ${JSON.stringify(inputs)}
-    inputs.forEach(input=>{
-      console.log(JSON.stringify(solucion(...input)))
-    })
+
+    let userFunc=()=>{
+      realOutput(JSON.stringify('Falta funcion solucion'))
+    }
+    
+      try{
+      ${req.body.resolvCode}
+
+      userFunc=solucion
+      inputs.forEach(input=>{
+        const res = userFunc(...input)
+
+        if(res === undefined){
+          realOutput(JSON.stringify('No tiene retorno definido por defecto'))
+        }else{
+          realOutput(JSON.stringify(res))
+
+        }
+      })
+    }catch{
+
+      inputs.forEach(input=>{
+        userFunc()
+      })
+     
+    }
     `
 
     const config = {
@@ -194,7 +221,8 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
       body: JSON.stringify({
         source_code: realCode,
         language_id: 63,
-        stdin: ''
+        stdin: '',
+        base64_encoded: true
       })
     }
 
@@ -210,6 +238,7 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
         `${process.env.JUDGE_URL}/submissions/${token}`
       )
       resultToken = await requestToken.json()
+      console.log(resultToken)
     } while (resultToken.status.id <= 2)
 
     if (resultToken.status.id === 11) {
@@ -219,7 +248,6 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
       })
       return
     }
-    console.log(resultToken)
     const output = resultToken.stdout.trim().split('\n')
     const realOutput = output.map((o: any) => JSON.parse(o))
     const out = problem.get('output')
@@ -331,11 +359,38 @@ examRouter.post('/exam/result', auth0, async (req: CustomReq, res) => {
     const testNote = problemNote / inputs.length
 
     const realCode = `
-    ${code}
+    const realOutput = console.log
+    console.log= ()=>{
+      realOutput(JSON.stringify("No vas a obtener nada!"))
+      return
+    }
     const inputs = ${JSON.stringify(inputs)}
-    inputs.forEach(input=>{
-      console.log(JSON.stringify(solucion(...input)))
-    })
+
+    let userFunc=()=>{
+      realOutput(JSON.stringify('Falta funcion solucion'))
+    }
+    
+      try{
+      ${code}
+
+      userFunc=solucion
+      inputs.forEach(input=>{
+        const res = userFunc(...input)
+
+        if(res === undefined){
+          realOutput(JSON.stringify('No tiene retorno definido por defecto'))
+        }else{
+          realOutput(JSON.stringify(res))
+
+        }
+      })
+    }catch{
+
+      inputs.forEach(input=>{
+        userFunc()
+      })
+     
+    }
     `
 
     try {
@@ -395,6 +450,7 @@ examRouter.post('/exam/result', auth0, async (req: CustomReq, res) => {
         error: true,
         msg: e
       })
+      return
     }
 
     // const testNote=
