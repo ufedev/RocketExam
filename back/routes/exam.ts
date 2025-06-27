@@ -257,7 +257,7 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
       if (JSON.stringify(o) === JSON.stringify(realOutput[index])) {
         return `output: ${JSON.stringify(realOutput[index])} ✅\n`
       }
-      return `output: ${JSON.stringify(realOutput[index])} ⚠️\n`
+      return `⚠️\n`
     })
 
     res.json({
