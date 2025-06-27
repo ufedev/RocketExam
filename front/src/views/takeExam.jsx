@@ -362,18 +362,23 @@ const TakeExam = () => {
                             <section className='col-start-1 col-end-3 bg-neutral-800 p-2 border-[1px] border-neutral-500 rounded-md h-full overflow-auto'>
                                 <h4 className='font-bold text-neutral-400 flex gap-2' title='input'><ArrowBigDownIcon />Test</h4>
                                 <article className='mt-3'>
-                                    {JSON.parse(activeProblem?.input ?? "[]").map((i) => {
+                                    {JSON.parse(activeProblem?.input ?? "[]").map((i, idx) => {
+
 
                                         if (Array.isArray(i)) {
-                                            return <div key={uuid()} className='flex gap-1 border-b-[1px] pb-2 border-neutral-600'>{i.map((el, index) => {
-                                                return <p key={uuid()}>{JSON.stringify(el)}{index < el.length && ', '}</p>
-                                            })}</div>
+                                            if (idx === 0) {
+                                                return <div key={uuid()} className='flex gap-1 border-b-[1px] pb-2 border-neutral-600'>{i.map((el, index) => {
+                                                    return <p key={uuid()}>{JSON.stringify(el)}{index < el.length && ', '}Test Visible</p>
+                                                })}</div>
+                                            } else {
+                                                return <div key={uuid()} className='flex gap-1 border-b-[1px] pb-2 border-neutral-600'>Test {idx + 1}</div>
+                                            }
                                         }
                                         return <p className='border-b-[1px] pb-2 border-neutral-600' key={uuid()}>{JSON.stringify(i)}</p>
                                     })}
                                 </article>
                             </section>
-                            <section className='col-start-3 col-end-4 bg-neutral-800 p-2 border-[1px] border-neutral-500 rounded-md overflow-auto'>
+                            {/* <section className='col-start-3 col-end-4 bg-neutral-800 p-2 border-[1px] border-neutral-500 rounded-md overflow-auto'>
                                 <h4 className='font-bold text-neutral-400 flex gap-2' title='output'>Test<ArrowBigUpIcon /></h4>
                                 <article className='mt-3'>
                                     {JSON.parse(activeProblem?.output ?? "[]").map(out => {
@@ -382,8 +387,8 @@ const TakeExam = () => {
 
                                     })}
                                 </article>
-                            </section>
-                            <section className='col-start-4 col-end-7 p-2 border-[1px] border-neutral-500 rounded-md bg-neutral-800 overflow-auto'>
+                            </section> */}
+                            <section className='col-start-3 col-end-7 p-2 border-[1px] border-neutral-500 rounded-md bg-neutral-800 overflow-auto'>
                                 <h4 className='font-bold text-neutral-400' title='terminal'><TerminalIcon /></h4>
                                 <div className=' whitespace-pre-wrap mt-3'>
                                     {loadingTest ? <Spinner2 /> : (Array.isArray(outputResult) ? outputResult?.map(r => <p key={uuid()} className='pb-2 border-b border-neutral-600 text-sm'>{r}</p>) : outputResult)}
