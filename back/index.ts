@@ -14,7 +14,7 @@ import { examResRouter } from './routes/exam_results'
 import cors from 'cors'
 // APP
 
-const port = process.argv[2] ?? 3000
+const port = 3000
 
 const app = express()
 app.use(cors())

@@ -1,13 +1,17 @@
-import { createTransport } from 'nodemailer'
-const transporter = createTransport({
-  host: process.env.MAIL_HOST,
-  port: process.env.MAIL_PORT,
-  secure: true,
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS
-  }
-})
+import nodemailer from 'nodemailer'
+
+
+const transporter = nodemailer.createTransport(
+  {
+    host: `${process.env.MAIL_HOST}`,
+    port: process.env.MAIL_PORT,
+    secure: true,
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS
+    }
+  } as nodemailer.TransportOptions
+)
 
 /** 
  * activateAccount
@@ -25,7 +29,7 @@ export async function activateAccount(mail: string, token: string) {
     Bienvenido a UTN_DEVSAFIO.
     para activar tu cuenta podes hacer click en el siguiente enlace.
 
-    https://${process.env.FRONT_URL}/activate_account/${token}
+    ${process.env.FRONT_URL}/activate_account/${token}
     
 
     Si no fuiste quien se registro, ignorá este mail

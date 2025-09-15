@@ -4,23 +4,25 @@ export const VerifyAccount = () => {
 
   const { token } = useParams()
   const [active, setActive] = useState(false)
+  const [loader, setLoader] = useState(false)
   useEffect(() => {
 
     async function load() {
-      const req = await fetch(`${import.meta.env.VITE_BACK_URL}/acitvate_account/${token}`)
+      setLoader(true)
+      const req = await fetch(`${import.meta.env.VITE_BACK_URL}/api/activate_account/${token}`)
       const res = await req.json()
-      if (!er) {
+      console.log(res)
+      if (!res.error) {
         setActive(true)
       }
+      setLoader(false)
     }
+    try {
+      load()
+    } catch { }
+  }, [active, loader])
 
-
-  }, [])
-
-  if (active) {
-    return <p>Su cuenta ha sido activada</p>
-  }
-
-  return <p>No encontrado</p>
+  if (loader) return <p>Verificando solicitud...</p>
+  return <div><p>{active ? "La cuenta ha sido activada" : "Error 404, usuario no encontrado"} </p></div>
 
 } 

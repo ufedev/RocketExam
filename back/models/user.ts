@@ -5,8 +5,8 @@ export interface UserType extends Model {
   nombre: string
   apellido: string
   password: string
-  email: string,
-  token: string,
+  email: string
+  token: string
   active: boolean
   type: 'PROFESOR' | 'ESTUDIANTE'
 }
@@ -34,7 +34,7 @@ export const User = sequelize.define<UserType>('User', {
   active: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
-  }
+  },
   password: {
     type: DataTypes.STRING
   },

@@ -176,7 +176,6 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
 
     const inputs = Array.isArray(inputsCases) ? inputsCases : []
 
-    // console.log(problemas[1])
 
     const realCode = `
     const realOutput = console.log
@@ -212,7 +211,6 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
      
     }
     `
-
     const config = {
       method: 'POST',
       headers: {
@@ -230,15 +228,13 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
 
     const response = await request.json()
     const token = response.token
-    console.log(token)
     let resultToken = null
     do {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 2000))
       const requestToken = await fetch(
         `${process.env.JUDGE_URL}/submissions/${token}`
       )
       resultToken = await requestToken.json()
-      console.log(resultToken)
     } while (resultToken.status.id <= 2)
 
     if (resultToken.status.id === 11) {
@@ -248,6 +244,7 @@ examRouter.post('/exam/problem/test', auth0, async (req: CustomReq, res) => {
       })
       return
     }
+    console.log(resultToken)
     const output = resultToken.stdout.trim().split('\n')
     const realOutput = output.map((o: any) => JSON.parse(o))
     const out = problem.get('output')
