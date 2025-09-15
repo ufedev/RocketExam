@@ -9,6 +9,7 @@ import Login from './views/Login'
 import CreateAccount from './views/CreateAccount'
 import CreateProblem from './views/CreateProblem'
 import CreateExam from './views/CreateExam'
+import { VerifyAccount } from './views/VerifyAccount'
 const Public = lazy(() => import("./layouts/Public"))
 const Private = lazy(() => import('./layouts/Private'))
 const Problems = lazy(() => import('./views/Problems'))
@@ -20,7 +21,7 @@ const Init = lazy(() => import('./views/Init'))
 
 
 
-export default function App () {
+export default function App() {
   return (
     <Suspense fallback={<Loader />}>
       <BrowserRouter>
@@ -28,6 +29,7 @@ export default function App () {
           <Route path='/' element={<Suspense fallback={<Loader />}><Public /></Suspense>} >
             <Route index element={<Login />} />
             <Route path='create_account' element={<CreateAccount />} />
+            <Route path='activate_account/:token' element={<VerifyAccount />} />
             <Route path='forgot_password' element={<h1>Forgot Paassrod</h1>} />
           </Route>
 
@@ -53,7 +55,7 @@ export default function App () {
               <Route path="resolv/:id" element={<Suspense fallback={<Loader />}><TakeExam /></Suspense>} />
             </Route>
             {/* 404 */}
-            <Route path='*' element={<div className='w-full h-screen flex justify-center items-center'><h1 className='text-3xl'>Ruta no encontrada 404</h1></div>} />
+            <Route path='*' element={<div className='w-full h-screen bg-slate-900 flex justify-center items-center'><h1 className='text-3xl text-slate-50'>Ruta no encontrada 404</h1></div>} />
           </Route>
         </Routes>
         <Toaster richColors visibleToasts={1} />

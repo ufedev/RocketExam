@@ -4,6 +4,8 @@ import type { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { auth0, CustomReq } from '../middleware/auth'
+import { activateAccount } from 'helpers/mails'
+import { v4 as uuid } from 'uuid'
 export const userRouter = Router()
 
 const secret = process.env.SECRET_KEY
@@ -37,6 +39,7 @@ userRouter.post(
     }
 
     const salt = await bcrypt.genSalt(10)
+
     const hashPassword = await bcrypt.hash(password, salt)
     let type = 'ESTUDIANTE'
     try {
@@ -44,20 +47,22 @@ userRouter.post(
       if (getAllUsers.length === 0) {
         type = 'PROFESOR'
       }
-
+      const token = uuid()
       const newUser = await User.create({
         nombre,
         apellido,
         dni,
+        email,
+        token,
         password: hashPassword,
         type
       })
 
       await newUser.save()
-
+      await activateAccount(email, token)
       res.json({
         error: false,
-        msg: 'Usuario creado, ya puedes iniciar sesión'
+        msg: 'Usuario creado, verifica tu correo para activar la cuenta'
       })
     } catch {
       res.status(401).json({
@@ -66,7 +71,6 @@ userRouter.post(
       })
     }
 
-    // res.json(req.body)
   }
 )
 
@@ -108,6 +112,13 @@ userRouter.post(
       return
     }
 
+    if (!u.active) {
+      res.status(401).json({
+        error: true,
+        msg: "La cuenta no esta verificada"
+      })
+      return
+    }
     const { id, nombre, apellido, type, dni: DNI } = u.dataValues
     const payload = {
       id,
