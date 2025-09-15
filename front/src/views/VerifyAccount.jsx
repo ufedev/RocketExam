@@ -19,7 +19,9 @@ export const VerifyAccount = () => {
     }
     try {
       load()
-    } catch { }
+    } catch {
+      console.log('something wrong')
+    }
   }, [active, loader])
 
   if (loader) return <p>Verificando solicitud...</p>
