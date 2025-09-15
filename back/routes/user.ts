@@ -129,9 +129,7 @@ userRouter.post(
       type
     }
 
-    const wt = jwt.sign(payload, secret ?? '', {
-      expiresIn: '2h'
-    })
+    const wt = jwt.sign(payload, secret ?? '')
 
     res.json({
       error: false,
