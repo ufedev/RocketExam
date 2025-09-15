@@ -22,7 +22,7 @@ export const VerifyAccount = () => {
     } catch {
       console.log('something wrong')
     }
-  }, [active, loader])
+  }, [])
 
   if (loader) return <p>Verificando solicitud...</p>
   return <div><p>{active ? "La cuenta ha sido activada" : "Error 404, usuario no encontrado"} </p></div>
