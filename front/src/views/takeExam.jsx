@@ -160,7 +160,7 @@ const TakeExam = () => {
           return
         }
 
-        loadExam(res.exam, 7200)
+        loadExam(res.exam, 1500)
 
 
       } catch (err) {
